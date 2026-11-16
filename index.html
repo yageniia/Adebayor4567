@@ -18,7 +18,24 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  >
   <meta name="description" content="Лаборатория пинов Заправок: As is и Stage 2 / PinWaltz.">
+
+  <style>
+    html,
+    body,
+    flt-glass-pane {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+  </style>
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -34,6 +51,27 @@
 </head>
 <body>
   <script>
+    // Keep two-finger gestures inside the map instead of letting the browser
+    // zoom or pan the whole prototype. Flutter still receives the touch events
+    // and handles map pinch-zoom through its gesture arena.
+    const preventBrowserPinch = (event) => event.preventDefault();
+    document.addEventListener('gesturestart', preventBrowserPinch, {
+      passive: false,
+    });
+    document.addEventListener('gesturechange', preventBrowserPinch, {
+      passive: false,
+    });
+    document.addEventListener('gestureend', preventBrowserPinch, {
+      passive: false,
+    });
+    document.addEventListener(
+      'touchmove',
+      (event) => {
+        if (event.touches.length > 1) event.preventDefault();
+      },
+      { passive: false },
+    );
+
     // This is an actively iterated prototype: stale service-worker assets make
     // UI fixes appear broken after a rebuild. Remove old registrations and let
     // every reload use the files currently served from build/web.
