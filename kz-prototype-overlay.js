@@ -156,7 +156,11 @@
       heights.collapsed + (heights.default - heights.collapsed) * value;
     heights.sheet.dataset.bottomSheetSnap = value < 0.5 ? 'collapsed' : 'default';
     heights.sheet.toggleAttribute('data-bottom-sheet-dragging', !!dragging);
-    heights.sheet.style.setProperty('--bottom-sheet-height', `${height}px`);
+    heights.sheet.style.setProperty(
+      '--bottom-sheet-height',
+      `${height}px`,
+      'important',
+    );
   }
 
   window.proKzOverlay = {
